@@ -1,0 +1,6 @@
+[submodule "lib/FNA"]
+	path = lib/FNA
+	url = https://github.com/FNA-XNA/FNA
+[submodule "lib/Newsoft.Json"]
+	path = lib/Newsoft.Json
+	url = https://github.com/JamesNK/Newtonsoft.Json

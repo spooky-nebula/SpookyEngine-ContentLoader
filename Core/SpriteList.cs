@@ -6,7 +6,7 @@ namespace ContentLoader.Core
     public struct SpriteList : IContentList<Sprite>, ITextureList
     {
         public List<Sprite> List { get; set; }
-        public Point RectangleSize { get; set; }
+        public RectangleSize RectangleSize { get; set; }
 
         public override string ToString()
         {
@@ -30,6 +30,23 @@ namespace ContentLoader.Core
         {
             string result = "{id:" + id + ",name:" + name + "}";
             return result;
+        }
+    }
+
+    public struct RectangleSize
+    {
+        public int X;
+        public int Y;
+
+        public override string ToString()
+        {
+            string result = "{X:" + X + ",Y:" + Y + "}";
+            return result;
+        }
+
+        public Point ToPoint()
+        {
+            return new Point(X, Y);
         }
     }
 }

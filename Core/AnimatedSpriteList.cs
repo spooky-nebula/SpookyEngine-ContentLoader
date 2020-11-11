@@ -6,7 +6,7 @@ namespace ContentLoader.Core
     public struct AnimatedSpriteList : IContentList<AnimatedSprite>, ITextureList
     {
         public List<AnimatedSprite> List { get; set; }
-        public Point RectangleSize { get; set; }
+        public RectangleSize RectangleSize { get; set; }
 
         public override string ToString()
         {

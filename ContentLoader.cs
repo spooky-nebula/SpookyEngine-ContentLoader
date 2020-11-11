@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using ContentLoader.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 using Newtonsoft.Json;
 
 namespace ContentLoader
@@ -26,6 +27,7 @@ namespace ContentLoader
             Content = content;
             textureSheets = new Dictionary<string, Texture2D>();
             textures = new Dictionary<string, Dictionary<string, Rectangle>>();
+            sounds = new Dictionary<string, Dictionary<string, SoundEffect>>();
             fonts = new Dictionary<string, SpriteFont>();
         }
 
@@ -45,15 +47,15 @@ namespace ContentLoader
             // On DEBUG print out all the loading shit
             foreach (var texture in textures)
             {
-                System.Diagnostics.Debug.WriteLine(texture.Key + " Loaded");
+                Debug.WriteLine(texture.Key + " Loaded");
             }
             foreach (var sound in sounds)
             {
-                System.Diagnostics.Debug.WriteLine(sound.Key + " Loaded");
+                Debug.WriteLine(sound.Key + " Loaded");
             }
             foreach (var font in fonts)
             {
-                System.Diagnostics.Debug.WriteLine(font.Key + " Loaded");
+                Debug.WriteLine(font.Key + " Loaded");
             }
 #endif
         }
@@ -88,7 +90,7 @@ namespace ContentLoader
             // Throw if that last line didn't work out as intended
             if (textureList == null) throw new Exception(sheetList + " is not a ITextureList");
             // Calculate the 16x16 rectangles on the sheet
-            List<Rectangle> rectangles = CalculateRectangles(textureSheet, textureList.RectangleSize);
+            List<Rectangle> rectangles = CalculateRectangles(textureSheet, textureList.RectangleSize.ToPoint());
             // Define the rectangle texture to textureName dictionary
             Dictionary<string, Rectangle> rectangleDictionary = new Dictionary<string, Rectangle>();
             // Assign names to each texture
@@ -156,8 +158,20 @@ namespace ContentLoader
             // Deserialize the content.json
             using var streamReader = new StreamReader(Content.RootDirectory + "/Content.json");
             JsonSerializer serializer = new JsonSerializer();
-            ContentFile output = (ContentFile) serializer.Deserialize(streamReader, typeof(ContentFile));
-            return output;
+            try
+            {
+                ContentFile output = (ContentFile) serializer.Deserialize(streamReader, typeof(ContentFile));
+                if (output.Content == null)
+                {
+                    throw new IOException("Content/Content.json was empty or not found.");
+                }
+                return output;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

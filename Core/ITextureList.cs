@@ -4,6 +4,6 @@ namespace ContentLoader.Core
 {
     public interface ITextureList
     {
-        public Point RectangleSize { get; set; }
+        public RectangleSize RectangleSize { get; set; }
     }
 }

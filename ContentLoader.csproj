@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Libraries\FNA\FNA.csproj" />
-      <ProjectReference Include="..\..\Libraries\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj" />
+      <ProjectReference Include="lib\FNA\FNA.csproj" />
+      <ProjectReference Include="lib\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj" />
     </ItemGroup>
 
 </Project>
